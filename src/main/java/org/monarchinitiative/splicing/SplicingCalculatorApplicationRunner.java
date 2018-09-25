@@ -1,6 +1,8 @@
-package org.monarchinitiative.splicing.calculate;
+package org.monarchinitiative.splicing;
 
 import de.charite.compbio.jannovar.data.JannovarData;
+import org.monarchinitiative.splicing.calculate.ScoredTranscriptModel;
+import org.monarchinitiative.splicing.calculate.TranscriptScorer;
 import org.monarchinitiative.splicing.io.ResultsWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +11,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.monarchinitiative.splicing.calculate.CoolTranscriptModel.byComparingPositionsOnFwdStrand;
 
 /**
  * Runner for the app's logic.
@@ -21,6 +21,9 @@ import static org.monarchinitiative.splicing.calculate.CoolTranscriptModel.byCom
 public class SplicingCalculatorApplicationRunner implements ApplicationRunner {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SplicingCalculatorApplicationRunner.class);
+
+    private int processed = 0;
+    private int total;
 
     private final JannovarData jannovarData;
 
@@ -47,18 +50,24 @@ public class SplicingCalculatorApplicationRunner implements ApplicationRunner {
 
 
     private void calculate() {
+        total = jannovarData.getTmByAccession().values().size();
+        LOGGER.info("Starting splicing calculations for {} transcripts", total);
         jannovarData.getTmByAccession().values().stream()
                 // score each transcript
                 .map(transcriptScorer.scoreTranscriptModel())
-                // sort by position on FWD strand of the chromosome
-                .sorted(byComparingPositionsOnFwdStrand())
-                // write
-                .forEachOrdered(resultsWriter::write);
+                // report progress on console
+                .peek(this::progress)
+                // write the transcripts
+                .forEach(resultsWriter::write);
+        LOGGER.info("Done!");
+    }
 
 
-        LOGGER.info("Starting calculate task");
-
-        LOGGER.info("Finished calculate task");
+    private void progress(ScoredTranscriptModel s) {
+        processed++;
+        if (processed % 10000 == 0) {
+            LOGGER.info(String.format("Processed %.2f%% of transcripts", ((double) processed * 100) / (double) total));
+        }
     }
 
 

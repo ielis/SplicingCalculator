@@ -30,7 +30,7 @@ hs_err_pid*
 
 ### IntelliJ IDE
 
-.idea
+.idea/
 *.iml
 
 out/

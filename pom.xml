@@ -4,9 +4,9 @@
 
     <groupId>org.monarchinitiative.splicing</groupId>
     <artifactId>SplicingCalculator</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <name>SplicingCalculator</name>
-    <description>Spring Boot with Jannovar, HTSJDK and others</description>
+    <description>Calculate splice donor and acceptor scores for all exons of the genome</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

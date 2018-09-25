@@ -38,7 +38,7 @@ public class TranscriptScorer {
     }
 
 
-    Function<TranscriptModel, CoolTranscriptModel> scoreTranscriptModel() {
+    public Function<TranscriptModel, ScoredTranscriptModel> scoreTranscriptModel() {
         return tm -> {
             // transcript interval
             GenomeInterval ti = tm.getTXRegion().withStrand(Strand.FWD);
@@ -81,7 +81,7 @@ public class TranscriptScorer {
                 acceptors.add(informationContentAnnotator.getSpliceAcceptorScore(acceptorSeq));
             }
 
-            return new CoolTranscriptModel(tm, donors, acceptors);
+            return new ScoredTranscriptModel(tm, donors, acceptors);
         };
     }
 }

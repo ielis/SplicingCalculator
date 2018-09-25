@@ -1,6 +1,7 @@
-package org.monarchinitiative.splicing.calculate;
+package org.monarchinitiative.splicing.io;
 
 import org.jblas.DoubleMatrix;
+import org.monarchinitiative.splicing.calculate.PositionWeightMatrix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -141,12 +142,12 @@ public class PositionalWeightMatrixParser {
     }
 
 
-    DoubleMatrix getDonorMatrix() {
+    public DoubleMatrix getDonorMatrix() {
         return donorMatrix;
     }
 
 
-    DoubleMatrix getAcceptorMatrix() {
+    public DoubleMatrix getAcceptorMatrix() {
         return acceptorMatrix;
     }
 
