@@ -49,12 +49,12 @@ You have to install Jannovar and follow instructions in the [Jannovar manual](ht
 After resources are prepared and updated in `application` properties, the app is **run** by:
 
 ```bash
-java -jar target/SplicingCalculator-1.0.0.jar --spring.config.location=target/classes/application.properties calculate
+java -jar target/SplicingCalculator-1.0.1.jar --spring.config.location=target/classes/application.properties calculate
 ```
 Alternatively, you can provide the paths to resources directly
 
 ```bash
-java -jar target/SplicingCalculator-1.0.0.jar --jannovar.cache.path=/path/to/cache.ser --ref.genome.fasta.file=/path/to/hg38.fa --main.output.file=hg38_out.tsv
+java -jar target/SplicingCalculator-1.0.1.jar --jannovar.cache.path=/path/to/cache.ser --ref.genome.fasta.file=/path/to/hg38.fa --main.output.file=hg38_out.tsv
 ```
 
 ## Use with tabix
