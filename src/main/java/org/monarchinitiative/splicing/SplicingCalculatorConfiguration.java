@@ -58,8 +58,9 @@ public class SplicingCalculatorConfiguration {
 
     @Bean
     public GenomeSequenceAccessor genomeSequenceAccessor(File refGenomeFastaFile) {
-        LOGGER.info("Using reference genome FASTA at '{}'", refGenomeFastaFile.getAbsolutePath());
-        return new GenomeSequenceAccessor(refGenomeFastaFile);
+        File refGenomeFastaIndex = new File(refGenomeFastaFile.getAbsolutePath() + ".fai");
+        LOGGER.info("Using reference genome FASTA file '{}' and index file '{}'", refGenomeFastaFile.getAbsolutePath(), refGenomeFastaIndex.getAbsolutePath());
+        return new GenomeSequenceAccessor(refGenomeFastaFile, refGenomeFastaIndex);
     }
 
 

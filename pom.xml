@@ -4,7 +4,7 @@
 
     <groupId>org.monarchinitiative.splicing</groupId>
     <artifactId>SplicingCalculator</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>SplicingCalculator</name>
     <description>Calculate splice donor and acceptor scores for all exons of the genome</description>
 
@@ -91,10 +91,23 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>create-archive</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Make uber JAR Spring wrapper -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
