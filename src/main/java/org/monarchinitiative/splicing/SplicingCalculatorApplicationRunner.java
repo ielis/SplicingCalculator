@@ -41,10 +41,16 @@ public class SplicingCalculatorApplicationRunner implements ApplicationRunner {
 
     public void run(ApplicationArguments args) throws Exception {
         List<String> nonOptionArgs = args.getNonOptionArgs();
-        if (nonOptionArgs.isEmpty() || nonOptionArgs.contains("help"))
+        if (nonOptionArgs.isEmpty() || nonOptionArgs.contains("help")) {
             LOGGER.info(makeHelpMessage());
-        else if (nonOptionArgs.contains("calculate")) {
-            calculate();
+            return;
+        }
+        if (nonOptionArgs.contains("calculate")) {
+            try {
+                calculate();
+            } catch (Exception e) {
+                LOGGER.warn("Exception occured: ", e);
+            }
         }
     }
 

@@ -91,6 +91,12 @@ public class GenomeSequenceAccessor implements AutoCloseable {
         this.fastaPath = fastaPath;
         FastaSequenceIndex fastaIndex = new FastaSequenceIndex(indexPath);
         fasta = new IndexedFastaSequenceFile(fastaPath, fastaIndex);
+        SAMSequenceDictionary sequenceDictionary = fasta.getSequenceDictionary();
+        if (sequenceDictionary == null) {
+            File sdict = new File(fastaPath.getParent(), fastaPath.getName().replace(".fa", ".dict"));
+            LOGGER.warn("Sequence dictionary {} is not present for fasta {}", sdict.getAbsolutePath(), fastaPath.getAbsolutePath());
+            throw new RuntimeException("");
+        }
         usePrefix = figureOutPrefix(fasta.getSequenceDictionary());
         useM = figureOutChrM(fasta.getSequenceDictionary());
     }

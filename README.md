@@ -37,8 +37,9 @@ wget http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.chromFa.tar.gz
 tar xvzf hg38.chromFa.tar.gz
 # concatenate into a single FASTA file
 for k in $(ls chroms/*.fa); do cat $k >> hg38.fa; done
-# index with samtools
+# index with samtools and create the sequence dictionary
 samtools faidx hg38.fa
+samtools dict hg38.fa > hg38.dict
 ```
 
 **Download Jannovar transcript database (cache)**
