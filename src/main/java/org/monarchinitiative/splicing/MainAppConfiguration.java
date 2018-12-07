@@ -16,6 +16,8 @@ import org.springframework.core.env.Environment;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.zip.GZIPOutputStream;
 
@@ -25,21 +27,26 @@ import java.util.zip.GZIPOutputStream;
  * @author <a href="mailto:daniel.danis@jax.org">Daniel Danis</a>
  */
 @Configuration
-public class SplicingCalculatorConfiguration {
+public class MainAppConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SplicingCalculatorConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainAppConfiguration.class);
 
     private final Environment env;
 
 
-    public SplicingCalculatorConfiguration(Environment env) {
+    public MainAppConfiguration(Environment env) {
         this.env = env;
     }
 
 
     @Bean
-    public JannovarData jannovarData() throws SerializationException {
-        return new JannovarDataSerializer(env.getProperty("jannovar.cache.file")).load();
+    public Path jannovarDataFile() {
+        return Paths.get(Objects.requireNonNull(env.getProperty("jannovar.cache.file")));
+    }
+
+    @Bean
+    public JannovarData jannovarData(Path jannovarDataFile) throws SerializationException {
+        return new JannovarDataSerializer(jannovarDataFile.toString()).load();
     }
 
 

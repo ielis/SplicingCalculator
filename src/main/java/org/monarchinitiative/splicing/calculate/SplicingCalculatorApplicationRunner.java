@@ -1,8 +1,6 @@
-package org.monarchinitiative.splicing;
+package org.monarchinitiative.splicing.calculate;
 
 import de.charite.compbio.jannovar.data.JannovarData;
-import org.monarchinitiative.splicing.calculate.ScoredTranscriptModel;
-import org.monarchinitiative.splicing.calculate.TranscriptScorer;
 import org.monarchinitiative.splicing.io.ResultsWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +20,15 @@ public class SplicingCalculatorApplicationRunner implements ApplicationRunner {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SplicingCalculatorApplicationRunner.class);
 
-    private int processed = 0;
-    private int total;
-
     private final JannovarData jannovarData;
 
     private final TranscriptScorer transcriptScorer;
 
     private final ResultsWriter resultsWriter;
+
+    private int processed = 0;
+
+    private int total;
 
 
     public SplicingCalculatorApplicationRunner(JannovarData jannovarData, TranscriptScorer transcriptScorer, ResultsWriter resultsWriter) {
@@ -41,10 +40,6 @@ public class SplicingCalculatorApplicationRunner implements ApplicationRunner {
 
     public void run(ApplicationArguments args) throws Exception {
         List<String> nonOptionArgs = args.getNonOptionArgs();
-        if (nonOptionArgs.isEmpty() || nonOptionArgs.contains("help")) {
-            LOGGER.info(makeHelpMessage());
-            return;
-        }
         if (nonOptionArgs.contains("calculate")) {
             try {
                 calculate();
@@ -76,15 +71,4 @@ public class SplicingCalculatorApplicationRunner implements ApplicationRunner {
         }
     }
 
-
-    /**
-     * @return String with help message for command line
-     */
-    private String makeHelpMessage() {
-        return "\n\nUSAGE:\n\n" +
-                "" +
-                "Available actions - {calculate, help}\n\n" +
-                "calculate - run calculate task\n" +
-                "help      - display this message\n";
-    }
 }
